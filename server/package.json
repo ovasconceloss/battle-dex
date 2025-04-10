@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "A fun application for pokemon battles (server-side)",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "dev": "node --experimental-strip-types --watch-path src src/index.ts"
+  },
   "keywords": [
     "Node",
     "Typescript",
