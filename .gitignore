@@ -31,7 +31,6 @@ Thumbs.db
 
 *.tsbuildinfo
 
-prisma/
 generated/
 
 .supabase/
