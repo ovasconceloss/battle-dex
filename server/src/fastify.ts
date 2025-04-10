@@ -1,5 +1,6 @@
 import Fastify from 'fastify';
 import { configDotenv } from 'dotenv';
+import { authRoutes } from './routes/auth.routes';
 
 configDotenv();
 
@@ -9,5 +10,7 @@ const fastify = Fastify({ logger: true });
 
 fastify.register(import('@fastify/cors'), { origin: '*' });
 fastify.register(import('@fastify/jwt'), { secret: process.env.JWT_SECRET });
+
+fastify.register(authRoutes);
 
 export default fastify;
