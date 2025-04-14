@@ -16,6 +16,7 @@ public/static/
 .tailwind-cache/
 
 .prisma/
+**/generated/
 *.db
 *.sqlite
 
