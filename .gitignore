@@ -29,6 +29,7 @@ pnpm-debug.log*
 pnpm-lock.*
 yarn-lock.*
 package-lock.*
+pnpm-workspace.*
 
 .vercel/
 .netlify/
