@@ -26,6 +26,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+pnpm-lock.*
+yarn-lock.*
+package-lock.*
 
 .vercel/
 .netlify/
