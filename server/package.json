@@ -18,6 +18,9 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "@fastify/cookie": "^11.0.2",
+    "@fastify/cors": "^11.0.1",
+    "@fastify/jwt": "^9.1.0",
     "@prisma/client": "^6.6.0",
     "@types/node": "^22.14.1",
     "dotenv": "^16.5.0",
