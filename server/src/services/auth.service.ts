@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
-import { ConflictError } from '../utils/errors';
+import fastify from '../fastify';
 import prismaClient from "../../prisma/prismaClient";
+import { AuthError, ConflictError, NotFoundError } from '../utils/errors';
 
 class AuthService {
     static async signUp(email: string, username: string, password: string) {
@@ -21,6 +22,30 @@ class AuthService {
         });
 
         const { passwordHash: _, ...userWithoutPassword } = user;
+        return userWithoutPassword;
+    }
+
+    static async signIn(email: string, password: string) {
+        if (!email || !password) throw new Error("Email and password are required");
+
+        const user = await prismaClient.user.findUnique({
+            where: { email },
+            select: {
+                id: true,
+                email: true,
+                passwordHash: true,
+            }
+        });
+
+        if (!user) throw new NotFoundError('User not found');
+
+        const passwordMatch = await bcrypt.compare(password, user.passwordHash);
+        if (!passwordMatch) throw new AuthError('Invalid password');
+
+        const authToken = fastify.jwt.sign({ id: user.id, email: user.email }, { expiresIn: '1h' });
+        const userWithToken = { ...user, token: authToken };
+
+        const { passwordHash: _, ...userWithoutPassword } = userWithToken;
         return userWithoutPassword;
     }
 }
