@@ -10,5 +10,6 @@ export async function authRoutes(fastify: FastifyInstance) {
         fastify.addHook("preHandler", verifyToken);
 
         fastify.post("/auth/signout", AuthController.signOut);
+        fastify.post("/auth/delete", AuthController.deleteAccount);
     });
 }

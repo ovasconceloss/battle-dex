@@ -57,6 +57,23 @@ class AuthService {
 
         return { success: true, message: "Logged out successfully" };
     }
+
+    static async deleteAccount(userId: string, password: string, token: string) {
+        const user = await prismaClient.user.findUnique({ where: { id: userId } });
+
+        if (!user) throw new NotFoundError('User not found');
+
+        const passwordMatch = await bcrypt.compare(password, user.passwordHash);
+        if (!passwordMatch) throw new AuthError('Invalid password');
+
+        const decodedToken: any = fastify.jwt.decode(token);
+        const expiresAt = new Date(decodedToken.exp * 1000);
+
+        await prismaClient.revokedToken.create({ data: { token, expiresAt } });
+        await prismaClient.user.delete({ where: { id: userId } });
+
+        return { success: true, message: "Account deleted successfully" };
+    }
 }
 
 export default AuthService;

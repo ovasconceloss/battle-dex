@@ -95,6 +95,36 @@ class AuthController {
             }
         }
     }
+
+    static async deleteAccount(request: FastifyRequest, reply: FastifyReply) {
+        const token = request.headers['authorization']?.split(' ')[1];
+        const { userId, password } = request.body as { userId: string; password: string };
+
+        try {
+            if (!token) throw new Error("Authorization token is missing");
+
+            await AuthService.deleteAccount(userId, password, token);
+            reply.code(200).send({ message: "Account deleted successfully" });
+        } catch (error) {
+            if (error instanceof AppError) {
+                reply.code(error.statusCode).send({
+                    statusCode: error.statusCode,
+                    error: error.message,
+                    message: 'Account deletion failed',
+                    status: 'fail',
+                    occurredAt: new Date().toISOString()
+                });
+            } else {
+                reply.code(500).send({
+                    statusCode: 500,
+                    error: 'Internal Server Error',
+                    message: 'An unexpected error occurred',
+                    status: 'fail',
+                    occurredAt: new Date().toISOString()
+                });
+            }
+        }
+    }
 }
 
 export default AuthController;
