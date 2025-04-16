@@ -48,6 +48,15 @@ class AuthService {
         const { passwordHash: _, ...userWithoutPassword } = userWithToken;
         return userWithoutPassword;
     }
+
+    static async signOut(token: string) {
+        const decodedToken: any = fastify.jwt.decode(token);
+        const expiresAt = new Date(decodedToken.exp * 1000);
+
+        await prismaClient.revokedToken.create({ data: { token, expiresAt } });
+
+        return { success: true, message: "Logged out successfully" };
+    }
 }
 
 export default AuthService;

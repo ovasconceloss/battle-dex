@@ -66,6 +66,35 @@ class AuthController {
             }
         }
     }
+
+    static async signOut(request: FastifyRequest, reply: FastifyReply) {
+        const token = request.headers['authorization']?.split(' ')[1];
+
+        try {
+            if (!token) throw new Error("Authorization token is missing");
+
+            await AuthService.signOut(token);
+            reply.code(200).send({ message: "Logged out successfully" });
+        } catch (error) {
+            if (error instanceof AppError) {
+                reply.code(error.statusCode).send({
+                    statusCode: error.statusCode,
+                    error: error.message,
+                    message: 'User logout failed',
+                    status: 'fail',
+                    occurredAt: new Date().toISOString()
+                });
+            } else {
+                reply.code(500).send({
+                    statusCode: 500,
+                    error: 'Internal Server Error',
+                    message: 'An unexpected error occurred',
+                    status: 'fail',
+                    occurredAt: new Date().toISOString()
+                });
+            }
+        }
+    }
 }
 
 export default AuthController;
