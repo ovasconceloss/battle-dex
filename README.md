@@ -22,9 +22,9 @@
 
 ## Stack Used
 
-- **Frontend:** NextJs, Typescript, Tailwind CSS, Shadcn/UI
+- **Frontend:** ReactJs, Typescript, Tailwind CSS, Shadcn/UI
 - **Backend:** Node.js, Typescript, Fastify, Prisma ORM
-- **Database:** Supabase (PostgreSQL) + Redis
+- **Database:** Supabase (PostgreSQL)
 - **External API:** PokeAPI
 - **Deploy:** Vercel (frontend) and Railway/Render (backend)
 
