@@ -1,4 +1,4 @@
-import Account from "@/pages/auth/Account";
+import Account from "@/pages/Account";
 import { Routes, Route } from "react-router-dom";
 
 const AuthRoutes: React.FC = () => {
