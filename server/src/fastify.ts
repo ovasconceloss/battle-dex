@@ -1,6 +1,7 @@
 import Fastify from "fastify";
 import { configDotenv } from "dotenv";
 import { authRoutes } from "./routes/auth.routes";
+import { pokemonRoutes } from "./routes/pokemon.routes";
 
 configDotenv();
 
@@ -15,5 +16,6 @@ fastify.register(import("@fastify/http-proxy"), { upstream: process.env.UPSTREAM
 fastify.register(import('@fastify/cookie'), { secret: process.env.COOKIE_SECRET, hook: 'onRequest', parseOptions: {} });
 
 fastify.register(authRoutes);
+fastify.register(pokemonRoutes);
 
 export default fastify;
