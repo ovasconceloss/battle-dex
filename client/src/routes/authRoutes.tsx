@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 const AuthRoutes: React.FC = () => {
     return (
         <Routes>
-            <Route path="/signup" element={<Account />} />
+            <Route path="/account" element={<Account />} />
         </Routes>
     );
 };
